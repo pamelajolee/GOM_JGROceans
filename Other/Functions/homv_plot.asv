@@ -1,0 +1,33 @@
+%% Used to make the Homvellor plot for the location where highest Chl-a is found in Figures 8-11
+
+function homv_plot(dates, vert_data, mld_data, depth, nDays)
+
+    load /Users/pameladoran/Documents/Toolbox-19May2024/ScientificColourMaps8/roma/roma.mat roma
+    
+    xticks = find(day(dates) == 1);
+    xtick_labels = datestr(dates(xticks), 'mmm dd');
+    yticks = 0:50:150;
+    fontsz = 18;
+
+    pan_dates = datetime(2019,4,29) % NCE = 1
+   datetime(2019,5,24) % CBCE = 2
+   datetime(2019,7,4) % CBCE = 3
+    
+    contourf(1:nDays, depth, vert_data.matrix, 20, 'LineColor', 'none');
+    hold on;
+    plot(1:nDays, mld_data.matrix, 'LineWidth', 3, 'Color', 'b')
+    set(gca, 'YDir', 'reverse');
+    
+    ylabel('Depth (m)', 'FontSize', fontsz);
+    set(gca, 'YTick', yticks)
+    xline(xticks, 'LineWidth', 10)
+    
+    set(gca, 'XTick', xticks, 'XTickLabel', xtick_labels);
+    set(gca, 'FontName', 'Times New Roman', 'FontSize', fontsz+6);
+    set(gca, 'Box', 'on')
+    colormap(roma);
+    clim([-2 2]);
+    ylim([0 150])
+
+end
+
